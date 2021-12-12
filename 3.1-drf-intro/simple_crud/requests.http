@@ -1,0 +1,29 @@
+    GET http://localhost:8000/api/v1/project/
+    Content-Type: application/json
+
+
+####
+
+    GET http://localhost:8000/api/v1/measurement/
+    Content-Type: application/json
+
+####
+
+    POST http://localhost:8000/api/v1/project/
+    Content-Type: application/json
+
+    {
+        "name": "third",
+        "latitude": 31412312,
+        "longitude": 513123
+    }
+
+####
+
+    POST http://localhost:8000/api/v1/measurement/
+    Content-Type: application/json
+
+    {
+        "project": 2,
+        "value": 12.2
+    }
