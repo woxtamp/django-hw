@@ -6,17 +6,17 @@ from .models import Product, Stock, StockProduct
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['id', 'title', 'description']
 
 
 class ProductPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockProduct
-        fields = '__all__'
+        fields = ['product', 'quantity', 'price']
 
     def validate_quantity(self, value):
         if value < 1:
-            raise ValidationError('значение должно быть больше 1')
+            raise ValidationError('Значение должно быть больше 1')
         return value
 
 
@@ -25,7 +25,7 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
-        fields = '__all__'
+        fields = ['id', 'address', 'positions']
 
     def create(self, validated_data):
         positions = validated_data.pop('positions')
