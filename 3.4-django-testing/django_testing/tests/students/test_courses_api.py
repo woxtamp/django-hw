@@ -9,14 +9,13 @@ from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CON
 def test_get_first_course(api_client, course_factory):
     course_name = course_factory()
 
-    url_get_first = reverse('courses-list')
-    response = api_client.get(url_get_first)
+    url_get_details = reverse('courses-detail', args=(course_name.id,))
+    response = api_client.get(url_get_details)
 
     assert response.status_code == HTTP_200_OK
     response_json = response.json()
-    assert len(response_json) == 1
-    for obj in response_json:
-        assert obj.get('name') == str(course_name.name)
+    assert len(response_json) == 3
+    assert response_json['name'] == str(course_name.name)
 
 
 # проверка получения списка курсов
@@ -40,8 +39,8 @@ def test_get_courses_list(api_client, course_factory):
 def test_get_course_by_name(api_client, course_factory):
     course_name = course_factory()
 
-    url_get_first = reverse('courses-list') + '?id=' + str(course_name.id)
-    response = api_client.get(url_get_first)
+    url = reverse('courses-list')
+    response = api_client.get(url, {'id': course_name.id})
 
     assert response.status_code == HTTP_200_OK
     response_json = response.json()
@@ -55,8 +54,8 @@ def test_get_course_by_name(api_client, course_factory):
 def test_get_course_by_id(api_client, course_factory):
     course_name = course_factory()
 
-    url_get_first = reverse('courses-list') + '?name=' + str(course_name.name)
-    response = api_client.get(url_get_first)
+    url = reverse('courses-list')
+    response = api_client.get(url, {'name': course_name.name})
 
     assert response.status_code == HTTP_200_OK
     response_json = response.json()
